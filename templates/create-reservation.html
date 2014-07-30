@@ -1,38 +1,37 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+{% extends "base.html" %}
 {% load staticfiles %}
-<html>
-<head>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-responsive.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker.css' %}">
+{% block title %}Create SWACI{% endblock %}
 
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+{% block styleblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/datepicker.css' %}">
+{% endblock %}
 
-    <title></title>
-</head>
-<body>
+
+{% block content %}
+
 <div class="container">
     <div class="row">
-        <div class="span4">
-            <form action="{% url 'email' %}" method="post">{% csrf_token %}
+        <div class="col-sm-4">
+            <form id="email_form" action="{% url 'email' %}" method="post">{% csrf_token %}
                 {{ email_form.as_p }}
-                <input type="submit" value=">>"/>
+                <input type="submit" value=">>" form="email_form" class="flow-btn"/>
+
             </form>
         </div>
-        <div class="span4">
-            <form action="{% if passenger %}{% url 'passenger_name' passenger.id %}{% else %}#{% endif %}"
+        <div class="col-sm-4">
+            <form id="name_form"
+                  action="{% if passenger %}{% url 'passenger_name' passenger.id %}{% else %}#{% endif %}"
                   method="post">{% csrf_token %}
                 {{ name_form.as_p }}
-                <input type="submit" value=">>"/>
+                <input type="submit" value=">>" form="name_form" class="flow-btn"/>
+
             </form>
         </div>
 
-        <div class="span4">
-            <form action="{% if passenger %}{% url 'reservation' passenger.id %}{% else %}#{% endif %}"
+        <div class="col-sm-4">
+            <form id="res_form" action="{% if passenger %}{% url 'reservation' passenger.id %}{% else %}#{% endif %}"
                   method="post">{% csrf_token %}
                 {% for field in reservation_form %}
                 <div class="fieldWrapper">
@@ -40,22 +39,22 @@
                     {{ field.errors }}
                 </div>
                 {% endfor %}
-                <input type="submit" value="Complete"/>
+                <input type="submit" value=">>" form="res_form" class="flow-btn"/>
+
             </form>
         </div>
     </div>
 
+
 </div>
-<script type="text/javascript">
-$(document).ready(function () {
-    $('#id_flight_date').datepicker();
-});
 
+{% endblock %}
 
+{% block jsblock %}
 
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
 
+<script type="text/javascript" src="{% static 'js/create-reservation.js' %}"></script>
 
-
-</script>
-</body>
-</html>
+{% endblock %}

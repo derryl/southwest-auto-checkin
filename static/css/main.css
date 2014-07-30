@@ -1,0 +1,13 @@
+body {
+  padding-top: 50px;
+}
+
+.row form {
+  height: 100%;
+}
+
+.flow-btn {
+  padding-top: 20px;
+  position: absolute;
+  bottom: 0;
+}
