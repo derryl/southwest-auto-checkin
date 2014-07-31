@@ -11,36 +11,47 @@
 
 {% block content %}
 
-<div class="container">
+<div id="logo">
+    <img src="{% static 'images/SWAC-logo.jpg' %}" alt="">
+</div>
+
+<div class="container flight-input">
+
     <div class="row">
-        <div class="col-sm-4">
-            <form id="email_form" action="{% url 'email' %}" method="post">{% csrf_token %}
-                {{ email_form.as_p }}
-                <input type="submit" value=">>" form="email_form" class="flow-btn"/>
-
+        <div class="col-lg-12">
+            <form id="email_form" action="{% url 'email' %}" method="post" class="form-horizontal">
+                {% csrf_token %}
+                <div class="field-group">
+                    {{ email_form }}
+                </div>
+                <!-- <input type="submit" value=">>" form="email_form" class="flow-btn"/> -->
             </form>
         </div>
-        <div class="col-sm-4">
-            <form id="name_form"
-                  action="{% if passenger %}{% url 'passenger_name' passenger.id %}{% else %}#{% endif %}"
-                  method="post">{% csrf_token %}
-                {{ name_form.as_p }}
-                <input type="submit" value=">>" form="name_form" class="flow-btn"/>
-
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <form id="name_form" method="post" action="{% if passenger %}{% url 'passenger_name' passenger.id %}{% else %}#{% endif %}" class="form-horizontal">
+                {% csrf_token %}
+                <div class="field-group">
+                    {{ name_form }}
+                </div>
+                <!-- <input type="submit" value=">>" form="name_form" class="flow-btn"/> -->
             </form>
         </div>
-
-        <div class="col-sm-4">
-            <form id="res_form" action="{% if passenger %}{% url 'reservation' passenger.id %}{% else %}#{% endif %}"
-                  method="post">{% csrf_token %}
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <form id="res_form" action="{% if passenger %}{% url 'reservation' passenger.id %}{% else %}#{% endif %}" method="post" class="form-horizontal">
+                {% csrf_token %}
                 {% for field in reservation_form %}
-                <div class="fieldWrapper">
+                    <div class="field-group">
                     {{ field.label_tag }} {{ field }}
                     {{ field.errors }}
-                </div>
+                    </div>
                 {% endfor %}
-                <input type="submit" value=">>" form="res_form" class="flow-btn"/>
-
+                <!-- <input type="submit" value=">>" form="res_form" class="flow-btn"/> -->
             </form>
         </div>
     </div>
